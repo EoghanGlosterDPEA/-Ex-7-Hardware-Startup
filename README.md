@@ -1,1 +1,1 @@
-# -Ex-7-Hardware-Startup
+# RaspberryPiCommon Hardware Startup templates to control hardware
