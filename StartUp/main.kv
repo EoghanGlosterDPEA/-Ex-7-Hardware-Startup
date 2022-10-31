@@ -7,24 +7,16 @@
 
 
     Slider:
-        id: slider
+        id: speedyslide
+        value: root.count
         min: 0
         max: 100
         step: 1
         orientation: 'horizontal'
+        on_value: root.sliderspeed(self.value)
 
-    Label:
-        text: str(slider.value)
-        font_size:30
-        y: root.height * 0.1
 
-    DPEAButton:
-        id: test_button
-        text: 'what are we?'
-        size: 100, 100
-        y: root.height * 0.3
-        color: 0, 1, 0, 1
-        on_press: root.pressed()
+
 
     SelfUpdatingLabel:
         id: time_label
@@ -39,37 +31,14 @@
         outline_width: self.font_size * 0.1
         outline_color: 0, 0, 0
 
-    DPEAButton:
-        id:OnOff
-        text: 'on'
-        size: 100, 100
-        y: root.height * 0.535
-        color: 0.5, 1, 0, 1
-        on_press: root.pressed1()
-        on_press: root.animate()
 
-    DPEAButton:
-        id:Counter
-        cow: 0
-        text: "0"
-        size: 100, 100
-        y: root.height * 0.1
-        color: 0.5, 0.9, 0.4, 1
-        on_press: root.pressed2()
 
-    DPEAButton:
-        id:MotorTime
-        text: "Motor"
-        size: 100, 100
-        y: root.height * 0.735
-        color: 0.5, 0.9, 0.4, 1
-        on_press: root.pressed3()
 
     Label:
         id:MotorLabel
         text: "motor on"
         size_hint: None, None
-        font_size: 10
+        font_size: 50
         x: root.width * 0.1
         y: root.height * 0.735
         color: 0.5, 0.9, 0.4, 1
@@ -98,22 +67,36 @@
         outline_color: 0.4, 0.3, 0.2, 0.7
 
     DPEAButton:
-        text: 'motor switch'
+        text: 'Motor on or off'
         size: 100, 100
-        x: root.width * 0.25
-        y: root.height * 0.25
+        y: root.height * 0.735
+        x: root.width * 0.4
         color: 0, 1, 0, 1
         on_press: root.toggleMotor()
+        on_press: root.pressed3()
 
     Label:
         id: mtr
         mDir: 0
         text: 'motor off'
         font_size: 40
-        color: 0,0,1,1
+        color: .8,.6,1,1
         size: 100, 100
         center_x: root.width * 0.9
         center_y: root.height * 0.9
+
+    DPEAButton:
+        id: ChangeDirection
+        text: 'Change Direction'
+        size: 100, 100
+        x: root.width * 0.4
+        y: root.height * 0.3
+        color: 0, 1, 0, 1
+        on_press: root.changedir()
+
+
+
+
 
 
 

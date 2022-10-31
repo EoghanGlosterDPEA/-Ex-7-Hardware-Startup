@@ -55,7 +55,6 @@ class ProjectNameGUI(App):
     """
     Class to handle running the GUI Application
     """
-
     def build(self):
         """
         Build the application
@@ -70,27 +69,12 @@ Window.clearcolor = (1, .4, 1, 1)  # Black
 class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
-    """
+"""
+    count = 1
     def __init__(self, **kw):
         super(MainScreen, self).__init__(**kw)
         Clock.schedule_interval(self.pressed5, 0.02)
-    def pressed(self):
-        """
-        Function called on button touch event for button with id: testButton
-        :return: None
-        """
-        print("a team!")
-
-    def pressed1(self):
-
-        if self.ids.OnOff.text =="on":
-            self.ids.OnOff.text="off"
-        else:
-            self.ids.OnOff.text="on"
-
-    def pressed2(self):
-        self.ids.Counter.cow += 1
-        self.ids.Counter.text = str(self.ids.Counter.cow)
+        self.speed = 9
 
     def pressed3(self):
         if self.ids.MotorLabel.text == "motor on":
@@ -99,14 +83,27 @@ class MainScreen(Screen):
             self.ids.MotorLabel.text = "motor on"
 
     def toggleMotor(self):
-        if self.ids.mtr.text == 'motor off':
-            self.ids.mtr.text = 'motor on'
-            s0.run(self.ids.mtr.mDir,10000)
-            print('on')
-        else:
+        if self.ids.mtr.text == 'motor on':
             self.ids.mtr.text = 'motor off'
-            print('off')
+            s0.run(self.ids.mtr.mDir, 10000)
+        else:
+            self.ids.mtr.text = 'motor on'
             s0.softStop()
+            s0.free_all()
+
+
+
+    def changedir(self):
+        if self.ids.mtr.mDir == 0:
+            self.ids.mtr.mDir = 1
+            s0.run(self.ids.mtr.mDir, 10000)
+        else:
+            self.ids.mtr.mDir = 0
+            s0.run(self.ids.mtr.mDir, 10000)
+
+    def sliderspeed(self, speed):
+        self.speed = speed
+        s0.set_speed(speed/15)
 
 
     def animate(self):
