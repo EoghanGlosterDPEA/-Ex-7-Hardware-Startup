@@ -7,7 +7,6 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from pidev.Joystick import Joystick
 from kivy.clock import Clock
 
 
@@ -30,13 +29,12 @@ from Slush.Devices import L6470Registers
 from datetime import datetime
 
 
-joy = Joystick(0, True)
 
 spi = spidev.SpiDev()
 
 s0 = stepper(port=0, micro_steps=32, hold_current=20, run_current=20, accel_current=20, deaccel_current=20,
-             steps_per_unit=200, speed=8)
-s0.setMaxSpeed(600)
+             steps_per_unit=200, speed=2)
+s0.setMaxSpeed(100)
 s0.setMinSpeed(0)
 
 
@@ -73,7 +71,6 @@ class MainScreen(Screen):
     count = 1
     def __init__(self, **kw):
         super(MainScreen, self).__init__(**kw)
-        Clock.schedule_interval(self.pressed5, 0.02)
         self.speed = 9
 
     def pressed3(self):
@@ -83,10 +80,13 @@ class MainScreen(Screen):
             self.ids.MotorLabel.text = "motor on"
 
     def toggleMotor(self):
-        if self.ids.mtr.text == 'motor on':
-            self.ids.mtr.text = 'motor off'
-            s0.run(self.ids.mtr.mDir, 10000)
-        else:
+        # s0.print_status()
+        # s0.goTo(6400)
+        # s0.print_status()
+         if self.ids.mtr.text == 'motor on':
+             self.ids.mtr.text = 'motor off'
+             s0.run(self.ids.mtr.mDir, 10000)
+         else:
             self.ids.mtr.text = 'motor on'
             s0.softStop()
             s0.free_all()
@@ -103,7 +103,7 @@ class MainScreen(Screen):
 
     def sliderspeed(self, speed):
         self.speed = speed
-        s0.set_speed(speed/15)
+        s0.set_speed(speed/50)
 
 
     def animate(self):
@@ -118,12 +118,6 @@ class MainScreen(Screen):
 
 
 
-    def pressed5(self, dt):
-        xvalue = (joy.get_axis('x')* self.width)/2
-        yvalue = (joy.get_axis('y') * self.height)/2
-        self.ids.Location.text = str(xvalue) + " " + str(yvalue)
-        self.ids.Location.x = xvalue
-        self.ids.Location.y = yvalue
 
     def admin_action(self):
         """

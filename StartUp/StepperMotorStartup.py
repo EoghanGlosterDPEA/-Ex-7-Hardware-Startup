@@ -14,7 +14,7 @@ spi = spidev.SpiDev()
 
 # Init a 200 steps per revolution stepper on Port 0
 s0 = stepper(port=0, micro_steps=32, hold_current=20, run_current=20, accel_current=20, deaccel_current=20,
-             steps_per_unit=200, speed=8)
+             steps_per_unit=200, speed=2)
 
 # get current position and print it to the screen
 s0.get_position_in_units()
